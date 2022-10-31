@@ -5,16 +5,16 @@ import helmet from 'helmet';
 import cors from 'cors';
 import compression from 'compression';
 import path from 'path';
+import { healthController } from '../controllers/health.controller';
+import { taskController } from '../controllers/task.controller';
 
 dotenv.config();
 
 const app = express();
-const port = process.env['port'] || 5000
 
-app.set('port', port)
-app.set('view engine', 'ejs')
-app.engine('html', ejs.renderFile)
-app.set('views', path.join(__dirname, 'views'))
+app.set('view engine', 'ejs');
+app.engine('html', ejs.renderFile);
+app.set('views', path.join(__dirname, 'views'));
 
 app.use(helmet());
 app.use(
@@ -28,4 +28,7 @@ app.use(compression());
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 
-export default app
+app.use('/health', healthController)
+app.use('/tasks', taskController)
+
+export { app };
