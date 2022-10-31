@@ -4,17 +4,17 @@ import dotenv from 'dotenv';
 import helmet from 'helmet';
 import cors from 'cors';
 import compression from 'compression';
-import path from 'path';
 import { healthController } from '../controllers/health.controller';
 import { taskController } from '../controllers/task.controller';
+import path from 'path';
 
 dotenv.config();
 
 const app = express();
 
+app.set('views', path.join(__dirname, 'views/pages'));
 app.set('view engine', 'ejs');
 app.engine('html', ejs.renderFile);
-app.set('views', path.join(__dirname, 'views'));
 
 app.use(helmet());
 app.use(
