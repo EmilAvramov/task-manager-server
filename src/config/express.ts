@@ -12,7 +12,7 @@ dotenv.config();
 
 const app = express();
 
-app.set('views', path.join(__dirname, 'views/pages'));
+app.set('views', path.join(__dirname, '../views/pages'));
 app.set('view engine', 'ejs');
 app.engine('html', ejs.renderFile);
 
@@ -27,8 +27,16 @@ app.use(
 app.use(compression());
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
+app.use(
+	'/css',
+	express.static(path.join(__dirname, 'node_modules/bootstrap/dist/css'))
+);
+app.use(
+	'/js',
+	express.static(path.join(__dirname, 'node_modules/bootstrap/dist/js'))
+);
 
-app.use('/health', healthController)
-app.use('/tasks', taskController)
+app.use('/health', healthController);
+app.use('/tasks', taskController);
 
 export { app };
